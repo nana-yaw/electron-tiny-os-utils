@@ -2,11 +2,51 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>CPU Monitor</title>
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    
+    <div class="box">
+      <span class="label">CPU (%)</span>
+      <span id="cpu"> - </span>
+    </div>
+
+    <div class="box">
+      <span class="label">Free Memory (%)</span>
+      <span id="free-memory"> - </span>
+    </div>
+
+    <div class="box">
+      <span class="label">Total Memory (GB)</span>
+      <span id="total-memory"> - </span>
+    </div>
+
+    <script>
+
+      const electron = require('electron')
+
+      const { ipcRenderer } = electron
+      
+
+      ipcRenderer.on('cpu', function(event, data) {
+        console.log('CPU Usage (%): ', data);
+        document.getElementById('cpu').innerHTML = data.toFixed(2);
+        
+      })
+
+      ipcRenderer.on('free-memory', function(event, data) {
+        console.log('Free Memory (%): ', data);
+        document.getElementById('free-memory').innerHTML = data.toFixed(2);
+        
+      })
+
+      ipcRenderer.on('total-memory', function(event, data) {
+        console.log('Total Memory (GB): ',data);
+        document.getElementById('total-memory').innerHTML = data.toFixed(2);
+        
+      })
+
+    </script>
   </body>
 </html>
