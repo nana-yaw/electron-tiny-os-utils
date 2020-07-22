@@ -26,7 +26,7 @@ if (process.platform === "linux") {
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  let mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
     icon: iconPath,
@@ -59,7 +59,7 @@ const createWindow = () => {
 
   })
 
-  mainWindow.on('close', function(e){
+  mainWindow.on('closed', function(e){
     var choice = require('electron').dialog.showMessageBox(this,
         {
           type: 'question',
@@ -71,7 +71,9 @@ const createWindow = () => {
          e.preventDefault();
        }else{
         clearInterval(checkCPU)
+        mainWindow = null
        }
+
     });
 
 };
